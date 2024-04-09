@@ -56,8 +56,8 @@ while menu:
         print("------------------Questions---------------------")
         print("A:- Which stock saw the most change over the years?")
         print("B:- What was the highest and lowest price of stock over the years?")
-        print("C:- Which stock had the highest trading volume on a specific date?")
-        print("D:- What is the average closing price of each stock over a specified time period")
+        print("C:-")
+        print("D:-")
         print("E:-")
         UserChoice2 = input("Choose a question please: ").upper()
         
