@@ -28,14 +28,27 @@ while menu:
     if userChoice == "A":
         netflixData = pd.read_csv(r"C:\coursework-1\netflix_stock_dataset (1).csv")
         print(netflixData)
-       
+       # Plotting Netflix stock prices
+        plt.plot(netflixData['Date'], netflixData['Close'])
+        plt.title('Netflix Stock Prices Over Time')
+        plt.xlabel('Date')
+        plt.ylabel('Price')
+        plt.xticks(rotation=45)
+        plt.show()
 
 
     # Dataset B (GOOG.csv) is read then displayed
     elif userChoice == "B":
         googleData = pd.read_csv(r"C:\coursework-1\GOOG (1).csv")
         print(googleData)
-              
+        # Plotting Google stock prices
+        plt.plot(googleData['Date'], googleData['Close'])
+        plt.title('Google Stock Prices Over Time')
+        plt.xlabel('Date')
+        plt.ylabel('Price')
+        plt.xticks(rotation=45)
+        plt.show()
+          
         
         
     # Questions need deciding and implemented under this if statement
@@ -98,3 +111,4 @@ while menu:
     # Input Validation
     else:
         print("Input is invalid, please use one of the displayed options!")
+        
