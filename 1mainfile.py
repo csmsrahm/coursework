@@ -4,8 +4,9 @@
 ########################################
 #             Imports                  #
 ########################################
-import pandas as pd 
-import matplotlib.pyplot as plt 
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates  # Import mdates for handling date formats
 
 # Define file paths using raw strings
 netflix_file_path = r"C:\coursework-1\netflix_stock_dataset (1).csv"
@@ -34,26 +35,36 @@ while menu:
     if userChoice == "A":
         print(netflixData)
         # Plotting Netflix stock prices
-        #SR Visualisation
+        # SR Visualisation
         plt.plot(netflixData['Date'], netflixData['Close'])
         plt.title('Netflix Stock Prices Over Time')
         plt.xlabel('Date')
         plt.ylabel('Price')
-        plt.xticks(rotation=45, ha='right')  
-        plt.tight_layout() 
+
+        # Customize x-axis to improve date visibility
+        plt.gca().xaxis.set_major_locator(mdates.AutoDateLocator())  # Auto date locator
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))  # Format date labels as Year-Month
+        plt.xticks(rotation=45, ha='right')
+
+        plt.tight_layout()
         plt.show()
 
     # Dataset B (Google) is read then displayed
     elif userChoice == "B":
         print(googleData)
         # Plotting Google stock prices
-        #SR Visualisation
+        # SR Visualisation
         plt.plot(googleData['Date'], googleData['Close'])
         plt.title('Google Stock Prices Over Time')
         plt.xlabel('Date')
         plt.ylabel('Price')
-        plt.xticks(rotation=45, ha='right')  
-        plt.tight_layout()  
+
+        # Customize x-axis to improve date visibility
+        plt.gca().xaxis.set_major_locator(mdates.AutoDateLocator())  # Auto date locator
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))  # Format date labels as Year-Month
+        plt.xticks(rotation=45, ha='right')
+
+        plt.tight_layout()
         plt.show()
         
   
