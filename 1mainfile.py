@@ -6,7 +6,7 @@
 ########################################
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.dates as mdates  # Import mdates for handling date formats
+import matplotlib.dates as mdates
 
 # Define file paths using raw strings
 netflix_file_path = r"C:\coursework-1\netflix_stock_dataset (1).csv"
@@ -35,7 +35,6 @@ while menu:
     if userChoice == "A":
         print(netflixData)
         # Plotting Netflix stock prices
-        # SR Visualisation
         plt.plot(netflixData['Date'], netflixData['Close'])
         plt.title('Netflix Stock Prices Over Time')
         plt.xlabel('Date')
@@ -53,7 +52,6 @@ while menu:
     elif userChoice == "B":
         print(googleData)
         # Plotting Google stock prices
-        # SR Visualisation
         plt.plot(googleData['Date'], googleData['Close'])
         plt.title('Google Stock Prices Over Time')
         plt.xlabel('Date')
@@ -67,16 +65,16 @@ while menu:
         plt.tight_layout()
         plt.show()
         
-  
-
-    # Questions need deciding and implemented under this if statement
+    # Questions section
     elif userChoice == "C":
         print("------------------Questions---------------------")
         print("A:- Which stock saw the most change over the years?")
         print("B:- What was the highest and lowest price of stock over the years?")
         print("C:- Compare the average trading volume of Netflix and Google stocks")
+        print("D:- Stock volume per company over the years")
         userChoice2 = input("Choose a question please: ").upper()
-        
+
+        # Question A: Which stock saw the most change over the years?
         if userChoice2 == "A":
             try:
                 # Calculate the total change in 'Open' prices for each dataset
@@ -100,42 +98,16 @@ while menu:
             except KeyError:
                 print("Error: 'Open' column not found in the dataset.")
 
+        # Question B: What was the highest and lowest price of stock over the years?
         elif userChoice2 == "B":
             try:
-                # Reads dataset A and puts contents into nData variable
-                nData = pd.read_csv(netflix_file_path)
-                # Two variables store the rows containing the highest and lowest stock prices
-                highNetflix = nData.loc[nData['Close'].idxmax()]
-                lowNetflix = nData.loc[nData['Close'].idxmin()]
-                highDate = highNetflix['Date']
-                lowDate = lowNetflix['Date']
-                highPrice = highNetflix['Close']
-                lowPrice = lowNetflix['Close']
-                #Outputs the date and prices of the highest and lowest stocks 
-                print(f"The Highest Netflix stock price occured on {highDate} and was valued at £{highPrice}")
-                print(f"The Lowest Netflix stock price occured on {lowDate} and was valued at £{lowPrice}")      
+                # Highest and lowest prices and corresponding dates for Netflix
+                n_highest_price_row = netflixData.loc[netflixData["Close"].idxmax()]
+                n_lowest_price_row = netflixData.loc[netflixData["Close"].idxmin()]
 
-                # Reads dataset B and puts contents into gData variable
-                gData = pd.read_csv(google_file_path)
-                # Two variables store the rows containing the highest and lowest stock prices
-                highGoogle = gData.loc[gData['Close'].idxmax()]
-                lowGoogle = gData.loc[gData['Close'].idxmin()]
-                highDate = highGoogle['Date']
-                lowDate = lowGoogle['Date']
-                highPrice = highGoogle['Close']
-                lowPrice = lowGoogle['Close']
-                #Outputs the date and prices of the highest and lowest stocks 
-                print(f"The Highest Google stock price occured on {highDate} and was valued at £{highPrice}")
-                print(f"The Lowest Google stock price occured on {lowDate} and was valued at £{lowPrice}")  
-
-                #JE Visualisation
-                # Find the row with the highest and lowest stock prices for Netflix
-                n_highest_price_row = nData.loc[nData["Close"].idxmax()]
-                n_lowest_price_row = nData.loc[nData["Close"].idxmin()]
-
-                # Find the row with the highest and lowest stock prices for Google
-                g_highest_price_row = gData.loc[gData["Close"].idxmax()]
-                g_lowest_price_row = gData.loc[gData["Close"].idxmin()]
+                # Highest and lowest prices and corresponding dates for Google
+                g_highest_price_row = googleData.loc[googleData["Close"].idxmax()]
+                g_lowest_price_row = googleData.loc[googleData["Close"].idxmin()]
 
                 # Extract highest and lowest prices and their corresponding dates for Netflix
                 n_highest_price = n_highest_price_row["Close"]
@@ -151,14 +123,14 @@ while menu:
 
                 # Plotting
                 plt.figure(figsize=(10, 6))
-                plt.plot(nData["Date"], nData["Close"], label="Netflix Stock Price")
-                plt.plot(gData["Date"], gData["Close"], label="Google Stock Price")
+                plt.plot(netflixData["Date"], netflixData["Close"], label="Netflix Stock Price")
+                plt.plot(googleData["Date"], googleData["Close"], label="Google Stock Price")
 
                 # Mark Netflix prices in red
                 plt.scatter(n_highest_date, n_highest_price, color='red', label=f'Highest Netflix Price: £{n_highest_price}', zorder=5)
                 plt.scatter(n_lowest_date, n_lowest_price, color='red', label=f'Lowest Netflix Price: £{n_lowest_price}', zorder=5)
 
-                # Mark Google prices in red 
+                # Mark Google prices in red
                 plt.scatter(g_highest_date, g_highest_price, color='red', label=f'Highest Google Price: £{g_highest_price}', zorder=5)
                 plt.scatter(g_lowest_date, g_lowest_price, color='red', label=f'Lowest Google Price: £{g_lowest_price}', zorder=5)
 
@@ -176,6 +148,7 @@ while menu:
             except ValueError:
                 print("Error: Close column not found in the dataset.")
 
+        # Question C: Compare the average trading volume of Netflix and Google stocks
         elif userChoice2 == "C":
             # Compare the average trading volume of Netflix and Google stocks
             netflix_avg_volume = netflixData['Volume'].mean()
@@ -197,12 +170,27 @@ while menu:
                 print("Google has a higher average trading volume compared to Netflix.")
             else:
                 print("Netflix and Google have the same average trading volume.")
-    
-    # elif statement allows the user to close the program through inputting "D" when prompted
+
+        # Question D: Stock volume per company over the years
+        elif userChoice2 == "D":
+            # Plotting stock volume per company over the years
+            plt.figure(figsize=(15, 10))
+            plt.plot(netflixData['Date'], netflixData['Volume'], label='Netflix Stock Volume')
+            plt.plot(googleData['Date'], googleData['Volume'], label='Google Stock Volume')
+
+            # Adding labels and title
+            plt.title('Stock Volume per Company Over the Years')
+            plt.xlabel('Date')
+            plt.ylabel('Volume')
+            plt.legend()
+            plt.xticks(rotation=45)
+            plt.show()
+
+    # Exit the program
     elif userChoice == "D":
         print("Thank you for using this program!")
         menu = False
 
-    # Input Validation
+    # Input validation
     else:
         print("Input is invalid, please use one of the displayed options!")
